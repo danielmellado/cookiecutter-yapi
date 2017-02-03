@@ -1,0 +1,87 @@
+{{cookiecutter.package_name}}
+============================
+
+Development
+-----------
+
+Better work on a virtual environment
+
+Create a directory called ``instance`` with a file ``config.py``.
+This file will host the sensible information:
+
+``instance/config.py``
+
+.. code-block:: python
+
+    SECRET_KEY = 'this_secret_is_not_secret'
+
+
+Now install the application with pip and run development server:
+
+.. code-block:: bash
+
+    # pip install --editable .
+
+    # . activate_dev.sh
+
+Creates the database and run development server:
+
+.. code-block:: bash
+
+    # flask db init
+    # flask db migrate
+    # flask db upgrade
+
+    # flask run
+
+For testing:
+
+.. code-block:: bash
+
+    # python setup.py test
+
+The project includes the following routes for test:
+
+GET /
+GET /foo
+GET /pdn
+
+Resource REST API:
+
+GET /pdn/<int:i>
+POST /pdn
+PUT /pdn/<int:i>
+DELETE /pdn/<int:i>
+
+PDN is a resource with the following attributes:
+
+
+    {
+        "id": 1,
+        "codigo": "Xu7yy5-4",
+        "descripcion": "Una cosa que se llama pdn",
+        "ip_master": "10.10.10.10"
+    }
+
+How to add an API
+-----------------
+
+
+Building
+--------
+
+python setup.py bdist_wheel
+
+A wheel package is created in ``dist`` directory which can be deployed
+in a virtualenv (or whatever) with ``pip``:
+
+.. code-block:: bash
+
+    pip install package-name.whl
+
+now it has to be setted the enviroments variables:
+
+.. code-block:: bash
+
+   FLASK_APP=api_scgc
+   APP_CONFIG_FILE=/path/to/config/file

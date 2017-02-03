@@ -1,0 +1,4 @@
+*.egg-info
+docs/_build/
+tests/__pycache__
+migrations/

@@ -1,0 +1,9 @@
+{
+    "author_name": "Juan David Rodríguez García",
+    "author_email": "juanda@yuido.com",
+
+    "package_name": "cookiecutter_yapi",
+    "package_version": "0.1.0",
+    "package_description": "An cookiecutter template for REST APIs development based on Flask",
+    "package_url": "https://github.com/juanda/cookiecutter-yapi"
+}
