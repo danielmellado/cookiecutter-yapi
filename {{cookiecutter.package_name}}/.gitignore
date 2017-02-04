@@ -2,3 +2,4 @@
 docs/_build/
 tests/__pycache__
 migrations/
+.eggs/
