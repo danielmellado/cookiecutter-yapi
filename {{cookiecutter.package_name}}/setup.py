@@ -11,6 +11,7 @@ setup(
         'flask-sqlalchemy',
         'flask-migrate',
         'flask-marshmallow',
+        'marshmallow-sqlalchemy',
         'mysqlclient'
     ],
     setup_requires=['pytest-runner'],
