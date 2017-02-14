@@ -55,5 +55,11 @@ get_collection_schema = PdnSchema(many=True)
 post_schema = PdnSchema()
 put_schema = PdnUpdateSchema()
 
-PdnResource = get_crud_resource(db, Entity, get_schema, put_schema)
-PdnList = get_crud_list(db, Entity, get_collection_schema, post_schema)
+PdnBaseResource = get_crud_resource(db, Entity, get_schema, put_schema)
+PdnBaseList = get_crud_list(db, Entity, get_collection_schema, post_schema)
+
+class PdnResource(PdnBaseResource):
+    pass
+
+class PdnList(PdnBaseList):
+    pass
