@@ -18,11 +18,18 @@ from pprint import pprint
 from flask import request, jsonify, make_response, abort
 from flask_restplus import Resource
 
+from .. import api
 
-def get_crud_resource(db, Entity, get_schema, put_schema):
 
+def get_crud_resource(db, Entity, get_schema, put_schema, resource_fields):
+
+    @api.doc(params={'id': 'The table identifier'})
     class CrudResource(Resource):
 
+        @api.doc(responses={
+            200: 'Success',
+            404: 'Not Found'
+        })
         def get(self, id):
             object = Entity.query.get(id)
             if object is None:
@@ -30,6 +37,10 @@ def get_crud_resource(db, Entity, get_schema, put_schema):
             result = get_schema.dump(object)
             return jsonify(result.data)
 
+        @api.doc(responses={
+            200: 'Success',
+            404: 'Not Found'
+        })
         def delete(self, id):
             object = Entity.query.get(id)
             if object is None:
@@ -38,6 +49,14 @@ def get_crud_resource(db, Entity, get_schema, put_schema):
             db.session.commit()
             return {"id": id}
 
+        @api.doc(
+            body=resource_fields,
+            responses={
+                200: 'Success',
+                404: 'Not Found',
+                422: 'Unprocessable entity'
+            }
+        )
         def put(self, id):
             object = Entity.query.get(id)
             if object is None:
@@ -58,10 +77,13 @@ def get_crud_resource(db, Entity, get_schema, put_schema):
     return CrudResource
 
 
-def get_crud_list(db, Entity, get_collection_schema, post_schema):
+def get_crud_list(db, Entity, get_collection_schema, post_schema, resource_fields):
 
     class CrudList(Resource):
 
+        @api.doc(responses={
+            200: 'Success'
+        })
         def query(self, args):
             if 'filters' in args:
                 filters = json.loads(args['filters'])
@@ -77,6 +99,13 @@ def get_crud_list(db, Entity, get_collection_schema, post_schema):
             result = get_collection_schema.dump(objects)
             return jsonify(result.data)
 
+        @api.doc(
+            body=resource_fields,
+            responses={
+                201: 'Created',
+                422: 'Unprocessable entity'
+            }
+        )
         def post(self):
             json_data = request.get_json(force=True)
             data, errors = post_schema.load(json_data)

@@ -61,14 +61,6 @@ put_schema = PdnUpdateSchema()
 
 
 """
-These functions return Resource classes mapped against the database
-"""
-PdnBaseResource = get_crud_resource(db, Entity, get_schema, put_schema)
-PdnBaseList = get_crud_list(db, Entity, get_collection_schema, post_schema)
-
-resource_fields = api.clone(PdnSchema.__name__)
-
-"""
 Unfortunately the swagger doc doesn't recognize the PdnSchema class to document the
 body resource, so we have to define again the fields :-(.
 I hope to see this feature in future release of flask-restplus
@@ -79,20 +71,19 @@ resource_fields = api.model('Pdn', {
     'id_ubicacion': f.Integer
  })
 
+"""
+These functions return Resource classes mapped against the database
+"""
+PdnBaseResource = get_crud_resource(db, Entity, get_schema, put_schema, resource_fields)
+PdnBaseList = get_crud_list(db, Entity, get_collection_schema, post_schema, resource_fields)
 
 """
 The resource class can't be shared between routes, that is, each route must have its own class.
 So we define new child class.
 """
-@api.doc(params={'id': 'The table identifier'})
 class PdnResource(PdnBaseResource):
-
-    @api.doc(body=resource_fields)
-    def put(self, id):
-        return  super().put(id)
+    pass
 
 
 class PdnList(PdnBaseList):
-    @api.doc(body=resource_fields)
-    def post(self):
-        return super().post()
+    pass
