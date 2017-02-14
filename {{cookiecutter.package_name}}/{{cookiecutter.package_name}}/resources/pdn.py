@@ -29,6 +29,8 @@ from .crud_resource import get_crud_resource, get_crud_list
 
 """
 PdnSchema is a marshmallow schema
+
+see: http://marshmallow.readthedocs.io/en/latest/
 """
 class PdnSchema(ma.Schema):
     id = fields.Integer()
@@ -64,9 +66,12 @@ put_schema = PdnUpdateSchema()
 Unfortunately the swagger doc doesn't recognize the PdnSchema class to document the
 body resource, so we have to define again the fields :-(.
 I hope to see this feature in future release of flask-restplus
+
+see: https://flask-restplus.readthedocs.io/en/stable/swagger.html
 """
 resource_fields = api.model('Pdn', {
     'codigo': f.String(required=True),
+    'descripcion': f.String,
     'ip_master': f.String,
     'id_ubicacion': f.Integer
  })
@@ -80,6 +85,9 @@ PdnBaseList = get_crud_list(db, Entity, get_collection_schema, post_schema, reso
 """
 The resource class can't be shared between routes, that is, each route must have its own class.
 So we define new child class.
+
+see: https://flask-restplus.readthedocs.io/en/stable and module ``crud_resource.py`` in this
+     package
 """
 class PdnResource(PdnBaseResource):
     pass
