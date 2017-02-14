@@ -7,7 +7,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'flask',
-        'flask-restful',
+        'flask-restplus',
         'flask-sqlalchemy',
         'flask-migrate',
         'flask-marshmallow',

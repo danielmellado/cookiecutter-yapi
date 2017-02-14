@@ -17,8 +17,9 @@ the CRUD.
 """
 
 from marshmallow import fields, validates
+from flask_restplus import fields as f
 
-from .. import db, ma
+from .. import db, ma, api
 from ..model import PDN as Entity
 from .validation_util import validate_unique, validate_unique_update, \
     validate_ip, validate_exists
@@ -26,7 +27,11 @@ from .validation_util import validate_unique, validate_unique_update, \
 from .crud_resource import get_crud_resource, get_crud_list
 
 
+"""
+PdnSchema is a marshmallow schema
+"""
 class PdnSchema(ma.Schema):
+    id = fields.Integer()
     codigo = fields.String(required=True)
     descripcion = fields.String()
     ip_master = fields.String(validate=validate_ip)
@@ -36,6 +41,10 @@ class PdnSchema(ma.Schema):
     def validate_codigo(self, value):
         validate_unique(db, Entity, 'codigo', value)
 
+"""
+PdnUpdateSchema is an PdnSchema but with other features; codigo is not required
+and the validation is a bit different
+"""
 class PdnUpdateSchema(PdnSchema):
     codigo = fields.String()
 
@@ -50,11 +59,40 @@ get_collection_schema = PdnSchema(many=True)
 post_schema = PdnSchema()
 put_schema = PdnUpdateSchema()
 
+
+"""
+These functions return Resource classes mapped against the database
+"""
 PdnBaseResource = get_crud_resource(db, Entity, get_schema, put_schema)
 PdnBaseList = get_crud_list(db, Entity, get_collection_schema, post_schema)
 
+resource_fields = api.clone(PdnSchema.__name__)
+
+"""
+Unfortunately the swagger doc doesn't recognize the PdnSchema class to document the
+body resource, so we have to define again the fields :-(.
+I hope to see this feature in future release of flask-restplus
+"""
+resource_fields = api.model('Pdn', {
+    'codigo': f.String(required=True),
+    'ip_master': f.String,
+    'id_ubicacion': f.Integer
+ })
+
+
+"""
+The resource class can't be shared between routes, that is, each route must have its own class.
+So we define new child class.
+"""
+@api.doc(params={'id': 'The table identifier'})
 class PdnResource(PdnBaseResource):
-    pass
+
+    @api.doc(body=resource_fields)
+    def put(self, id):
+        return  super().put(id)
+
 
 class PdnList(PdnBaseList):
-    pass
+    @api.doc(body=resource_fields)
+    def post(self):
+        return super().post()

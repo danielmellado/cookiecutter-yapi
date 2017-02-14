@@ -6,17 +6,17 @@ CRUD operation on a resource. These function are "templated"
 class, that is; they returns a class which has been initialized
 with the function arguments.
 
-get_crud_resource returns a flask_restful Resource class with
+get_crud_resource returns a flask_restplus Resource class with
 the operation get, delete and put.
 
-get_crud_list return a flask_restful Resource class with the
+get_crud_list return a flask_restplus Resource class with the
 operation get (collection) and post
 """
 import json
 from pprint import pprint
 
 from flask import request, jsonify, make_response, abort
-from flask_restful import Resource
+from flask_restplus import Resource
 
 
 def get_crud_resource(db, Entity, get_schema, put_schema):
