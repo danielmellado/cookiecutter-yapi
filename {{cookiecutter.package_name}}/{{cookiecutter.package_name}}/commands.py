@@ -1,5 +1,5 @@
 import click
-from .{{cookiecutter.package_name}} import app
+from .{{cookiecutter.package_name}} import app, api
 
 
 @app.cli.command()
