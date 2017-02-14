@@ -1,4 +1,5 @@
 import click
+from flask import json
 from .{{cookiecutter.package_name}} import app, api
 
 
