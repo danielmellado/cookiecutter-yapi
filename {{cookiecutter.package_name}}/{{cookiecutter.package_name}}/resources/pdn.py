@@ -36,11 +36,6 @@ class PdnSchema(ma.Schema):
     def validate_codigo(self, value):
         validate_unique(db, Entity, 'codigo', value)
 
-    @validates('id_ubicacion')
-    def validate_ubicacion(self, value):
-        validate_exists(db, Ubicacion, 'id', value)
-
-
 class PdnUpdateSchema(PdnSchema):
     codigo = fields.String()
 
