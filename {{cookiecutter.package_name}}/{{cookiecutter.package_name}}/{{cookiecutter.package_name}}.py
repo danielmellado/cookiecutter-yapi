@@ -7,7 +7,14 @@ from .config import default
 
 
 app = Flask(__name__, instance_relative_config=True)
-api = Api(app,version='{{cookiecutter.package_version}}', doc='/doc', default="API", default_label="{{cookiecutter.package_name}}")
+api = Api(
+    app,
+    version='{{cookiecutter.package_version}}',
+    default='',
+    default_label='',
+    title="{{cookiecutter.package_name}}",
+    description="{{cookiecutter.package_name}} description"
+)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 migrate = Migrate(app, db)
