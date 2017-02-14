@@ -81,9 +81,6 @@ def get_crud_list(db, Entity, get_collection_schema, post_schema, resource_field
 
     class CrudList(Resource):
 
-        @api.doc(responses={
-            200: 'Success'
-        })
         def query(self, args):
             if 'filters' in args:
                 filters = json.loads(args['filters'])
@@ -93,6 +90,9 @@ def get_crud_list(db, Entity, get_collection_schema, post_schema, resource_field
 
             return objects
 
+        @api.doc(responses={
+            200: 'Success'
+        })
         def get(self):
             # pprint(json.loads(request.args['filters']))
             objects = self.query(request.args)
