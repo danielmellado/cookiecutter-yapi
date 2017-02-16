@@ -4,19 +4,9 @@
 Development
 -----------
 
-Better work on a virtual environment
+Better work on a virtual environment.
 
-Create a directory called ``instance`` with a file ``config.py``.
-This file will host the sensible information:
-
-``instance/config.py``
-
-.. code-block:: python
-
-    SECRET_KEY = 'this_secret_is_not_secret'
-
-
-Now install the application with pip and run development server:
+Install the application with pip and run development server:
 
 .. code-block:: bash
 
@@ -39,6 +29,9 @@ For testing:
 .. code-block:: bash
 
     # python setup.py test
+
+The application is configurated in file pdn_api_scgc/config.py, but these values can be overwritten by creating a python
+file and adding its path to the environment variable APP_CONFIG_FILE. This will be useful when deploying the application.
 
 The project includes the following routes for test:
 

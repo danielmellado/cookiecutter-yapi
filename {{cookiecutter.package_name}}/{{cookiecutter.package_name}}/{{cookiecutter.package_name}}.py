@@ -6,7 +6,7 @@ from flask_marshmallow import Marshmallow
 from .config import default
 
 
-app = Flask(__name__, instance_relative_config=True)
+app = Flask(__name__)
 api = Api(
     app,
     version='{{cookiecutter.package_version}}',
@@ -20,8 +20,7 @@ ma = Marshmallow(app)
 migrate = Migrate(app, db)
 
 app.config.update(default)
-app.config.from_pyfile('config.py')
-app.config.from_envvar('APP_CONFIG_FILE')
+app.config.from_envvar('APP_CONFIG_FILE', silent=True)
 
 
 @app.route('/')
