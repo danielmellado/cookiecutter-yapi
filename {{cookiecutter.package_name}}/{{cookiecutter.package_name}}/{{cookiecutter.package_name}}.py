@@ -21,8 +21,3 @@ migrate = Migrate(app, db)
 
 app.config.update(default)
 app.config.from_envvar('APP_CONFIG_FILE', silent=True)
-
-
-@app.route('/')
-def home():
-    return app.config['PARAM2']
