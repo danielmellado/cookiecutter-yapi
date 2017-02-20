@@ -116,6 +116,6 @@ def get_crud_list(db, Entity, get_collection_schema, post_schema, resource_field
             object = Entity(data)
             db.session.add(object)
             db.session.commit()
-            return make_response(jsonify(data), 201)
+            return make_response(jsonify(post_schema.dump(obj)), 201)
 
     return CrudList
