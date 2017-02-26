@@ -22,7 +22,11 @@ Creates the database and run development server:
     # flask db migrate
     # flask db upgrade
 
-    # flask run
+     # flask run --with-threads
+
+The API can also be runned like this:
+
+    # python run.py
 
 For testing:
 
