@@ -53,7 +53,7 @@ class PdnUpdateSchema(PdnSchema):
     @validates('codigo')
     def validate_codigo(self, value):
         validate_unique_update(db, Entity, 'codigo',
-                               value, self.context['object'])
+                               value, self.context['obj'])
 
 
 get_schema = PdnSchema()
