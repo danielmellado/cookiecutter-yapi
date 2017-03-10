@@ -12,7 +12,8 @@ setup(
         'flask-migrate',
         'flask-marshmallow',
         'marshmallow-sqlalchemy',
-        'mysqlclient'
+        'mysqlclient',
+        'gunicorn'
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest']
