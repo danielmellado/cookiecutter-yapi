@@ -27,6 +27,10 @@ Creates the database and run development server:
 The API can also be runned like this:
 
     # python run.py
+    
+Or like this:
+    
+    # gunicorn {{cookiecutter.package_name}}:app
 
 For testing:
 
