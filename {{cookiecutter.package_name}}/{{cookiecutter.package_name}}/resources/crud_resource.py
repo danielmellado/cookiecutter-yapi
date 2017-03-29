@@ -97,7 +97,10 @@ def get_crud_list(db, Entity, get_collection_schema, post_schema, resource_field
         def _query(self, args):
             if 'filters' in args:
                 filters = json.loads(args['filters'])
-                objs = Entity.query.filter_by(**filters)
+                q = Entity.query
+                for attr in filters:
+                    q = q.filter(getattr(Entity, attr).like("%%%s%%" % filters[attr]))
+                objs = q.all()
             else:
                 objs = Entity.query.all()
 
